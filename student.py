@@ -77,10 +77,3 @@ cool_mentor.courses_attached += ['Python']
 best_student.rate_hw(cool_mentor, 'Python', 2) """
 
 
- 
-cool_mentor.rate_hw(best_student, 'Python', 10)
-cool_mentor.rate_hw(best_student, 'Python', 10)
-cool_mentor.rate_hw(best_student, 'Python', 10)
- 
-print(best_student.grades)
-print(best_student.finished_courses)
