@@ -39,3 +39,4 @@ cool_mentor.rate_hw(best_student, 'Python', 10)
 cool_mentor.rate_hw(best_student, 'Python', 10)
  
 print(best_student.grades)
+print(best_student.finished_courses)
