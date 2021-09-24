@@ -7,12 +7,12 @@ class Student:
         self.courses_in_progress = []
         self.grades = {}
     
-    def rate_lecturer(self, lecturer, course, grade):
-        if isinstance(lecturer, Lecturer) and course in self.finished_courses and course in lecturer.courses_attached and (0 <= grade <= 10):
-            if course in lecturer.result_grade:
-                lecturer.result_grade[course] += [grade]
+    def rate_hw(self, lecturer, course, grade):
+        if isinstance(lecturer, Lecturer) and course in self.courses_attached and course in lecturer.courses_attached:
+            if course in lecturer.grade:
+                lecturer.grades[course] += [grade]
             else:
-                lecturer.result_grade[course] = [grade]
+                lecturer.grades[course] = [grade]
         else:
             return 'Ошибка'
         
@@ -22,18 +22,23 @@ class Mentor:
         self.surname = surname
         self.courses_attached = []
         
+    
 
 class Lecturer(Mentor):
     def __init__(self, name, surname):
-        super().__init__(name, surname)
-        self.result_grade = {}
-
+        self.name = name
+        self.surname = surname
+        self.courses_attached = []
+        self.grade = []
+ 
 class Reviewer(Mentor):
     def __init__(self, name, surname):
-        super().__init__(name, surname)
+        self.name = name
+        self.surname = surname
+        self.courses_attached = []
 
-    def rate_hw(self, student, grade, course):
-        if isinstance(student, Student) and course in self.courses_attached and course in student.finished_courses:
+    def raiting(self, student, course, grade):
+        if isinstance(student, Student) and course in self.courses_attached and course in student.courses_in_progress:
             if course in student.grades:
                 student.grades[course] += [grade]
             else:
@@ -73,5 +78,9 @@ best_student.rate_hw(cool_mentor, 'Python', 2) """
 
 
  
-# print(best_student.grades)
-
+cool_mentor.rate_hw(best_student, 'Python', 10)
+cool_mentor.rate_hw(best_student, 'Python', 10)
+cool_mentor.rate_hw(best_student, 'Python', 10)
+ 
+print(best_student.grades)
+print(best_student.finished_courses)
