@@ -115,9 +115,9 @@ class Reviewer(Mentor):
             else:
                 student.grades[course] = [grade]
         else:
-            return "Ошибка, курсы не совпадают"
+            return "Курсы не совпадают"
 
-
+print('___diagnostics information___')
 first_student = Student('Ruoy', 'Eman', 'man')
 first_student.courses_in_progress += ['Pascal']
 first_student.courses_in_progress += ['Python']
@@ -136,15 +136,16 @@ strong_reviwer.courses_attached += ['Pascal']
 strong_reviwer.courses_attached += ['Python']
 print(strong_reviwer.raiting(first_student, 'Pascal', 10))
 print(strong_reviwer.raiting(first_student, 'Python', 3))
-print(strong_reviwer.raiting(first_student, 'Pascal', 10))
+print(strong_reviwer.raiting(first_student, 'Pascal', 0))
 
 light_reviwer = Reviewer('Big', 'Smaillovich')
 light_reviwer.courses_attached += ['Git']
 light_reviwer.courses_attached += ['Python']
 print(light_reviwer.raiting(first_student, 'Git', 10))
 print(light_reviwer.raiting(first_student, 'Python', 3))
-print(light_reviwer.raiting(first_student, 'Git', 10))
 print(light_reviwer.raiting(next_student, 'Git', 10))
+print(light_reviwer.raiting(next_student, 'Git', 2))
+print(light_reviwer.raiting(next_student, 'Python', 10))
 
 
 last_lecturer = Lecturer('Loren', 'Avgsh')
@@ -163,23 +164,60 @@ first_student.rate_hw(last_lecturer, 'Python', 8)
 
 next_student.rate_hw(last_lecturer, 'Git', 4)
 next_student.rate_hw(last_lecturer, 'Python', 8)
+next_student.rate_hw(first_lecturer, 'Git', 10)
+next_student.rate_hw(first_lecturer, 'Python', 6)
 
-
+print('___print grades lecturer and students___')
 print(last_lecturer.grades)  
 print(first_student.grades)
-  
+print('___avg lecturer and student___')
 print(last_lecturer.avg_grades())
 print(first_lecturer.avg_grades())
-
-print('___avg students___')
+print('___information students___')
 print(first_student.__str__())
 print(next_student.__str__())
-print('___avg lecturers___')
+print('___information lecturers___')
 print(first_lecturer.__str__())
 print(last_lecturer.__str__())
-
-
+print('___compare Lecturer and Students____')
 print(first_lecturer.compare(last_lecturer))
 print(first_student.compare(next_student))
+
+def avg_rate_students(students_list, courses):
+    rating = 0
+    count = 0
+    response = ''
+    for student in students_list:
+        if isinstance(student, Student) and courses in student.grades:
+            for grade in student.grades[courses]:
+                rating += grade
+                count += 1
+        else:
+            response = f"Do not find course: {courses}"
+    avg_grade = round((rating / count), 1)
+    response = f'AVG rate for Students: {avg_grade}, course: {courses}'
+    return response
+
+student_list = [first_student, next_student]
+print(avg_rate_students(student_list, 'Pascal'))
+
+
+def avg_rate_lecturers(lecrurer_list, course):
+    rating = 0
+    count = 0
+    response = ''
+    for lecturer in lecrurer_list:
+        if isinstance(lecturer, Lecturer) and course in lecturer.grades:
+            for grade in lecturer.grades[course]:
+                rating += grade
+                count += 1
+        else:
+            response = f"Do not find course: {course}"
+    avg_grade = round((rating / count), 1)
+    response = f'AVG rate for Lecturers: {avg_grade}, course: {course}'
+    return response
+
+lecturer_list = [last_lecturer, first_lecturer]
+print(avg_rate_lecturers(lecturer_list, 'Git'))
 
 
