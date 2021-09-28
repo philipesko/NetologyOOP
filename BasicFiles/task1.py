@@ -1,41 +1,46 @@
 import os
-import json
+from pprint import pprint
+from posixpath import dirname, split
 
-dir = os.path.abspath(os.curdir)
-dir = os.getcwd()
-print(dir)
-recipes_list = []
-tmp_list = []
-with open(f'{dir}/BasicFiles/recipes.txt', 'r') as file:
-    for line in file:
-        line = line[:-1]
-        #line = line.split("|")
-        #line = line.split("\n")
-        
-        if line:
-            tmp_list.append(line)
-            count = 0
-            value = []
-            key = []
-            for list in tmp_list:
-                print(isinstance(list, str))
-                if len(list) > 1 and not isinstance(list, int):
-                    value.append(list.split('|'))
-                elif isinstance(list, int):
-                    count = list
-                    print(count)
-                elif len(list) == 1 and isinstance(list, str):
-                    key.append(list)
+
+def load_file():
+    dir = os.path.abspath(os.curdir)
+    dir = os.getcwd()
+    print(dir)
+    with open(f'{dir}/BasicFiles/recipes.txt', 'r') as file:
+        data = {}
+        for line in file:
+            meal = line.strip()
+            counter = int(file.readline())
+            _lingrid_list = []
+            for item in range(counter):
+                ingridient_name, quantity, uom = file.readline().strip("\n").split("|")
+                _lingrid_list.append(
+                    {'ingridient name': ingridient_name, 'quantity': quantity, 'unit of measurment': uom}
+                )
+            data[meal] = _lingrid_list
+            file.readline()
+    return data
+
+
+def get_shop_list_by_dishes(dishes, person_count):
+    data = {}
+    ingridients = load_file()
+    for dish in dishes:
+        if dish in ingridients:
+            for ingrid in ingridients[dish]:
+                if data.values() in ingrid:
+                    data[ingrid['ingridient name']] += {'measure': ingrid['unit of measurment'], 
+                    'quantity': int(ingrid['quantity']) * person_count}
+                elif ingrid['ingridient name'] in data:
+                    data[ingrid['ingridient name']]['quantity'] = \
+                        int(data[ingrid['ingridient name']]['quantity']) + (int(ingrid['quantity']) * person_count)
                 else:
-                    pass
-            
-            #print(value)
-            print(key)
-            
-#print(recipes_list)
-#recipes_dict = {}
-#for rec in recipes_list:
-    #count = 0
-    #print(len(rec))
-    #print(recipes_dict)
+                    data[ingrid['ingridient name']] = {'measure': ingrid['unit of measurment'], 
+                    'quantity': int(ingrid['quantity']) * person_count}
+    return data
 
+
+
+pprint(load_file())
+pprint(get_shop_list_by_dishes(['Запеченный картофель', 'Омлет', 'Фахитос'], 2))

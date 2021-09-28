@@ -219,5 +219,5 @@ def avg_rate_lecturers(lecrurer_list, course):
 
 lecturer_list = [last_lecturer, first_lecturer]
 print(avg_rate_lecturers(lecturer_list, 'Git'))
-
+    
 
