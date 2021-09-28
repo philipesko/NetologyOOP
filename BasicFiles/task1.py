@@ -1,12 +1,11 @@
 import os
 from pprint import pprint
 from posixpath import dirname, split
+from collections import OrderedDict
 
 
 def load_file():
-    dir = os.path.abspath(os.curdir)
     dir = os.getcwd()
-    print(dir)
     with open(f'{dir}/BasicFiles/recipes.txt', 'r') as file:
         data = {}
         for line in file:
@@ -41,6 +40,23 @@ def get_shop_list_by_dishes(dishes, person_count):
     return data
 
 
+def parser_txt(files):
+    dir = os.getcwd()
+    dir = dir + '/BasicFiles/'
+    data = []
+    for file in files:
+        file_data = {}
+        lines = []
+        with open(f'{dir}{file}.txt', 'r', encoding='utf-8') as data_file:
+            counter = 0
+            for line in data_file:
+                lines.append(line.strip())
+                counter += 1
+            data.append({'File name': f'{file}.txt', f'counter{file}': counter, 'data files': lines})
+    #test = OrderedDict(data)
+    return data
+
 
 pprint(load_file())
 pprint(get_shop_list_by_dishes(['Запеченный картофель', 'Омлет', 'Фахитос'], 2))
+pprint(parser_txt(["1", '2', "3"]))
