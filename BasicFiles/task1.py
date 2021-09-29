@@ -39,22 +39,42 @@ def get_shop_list_by_dishes(dishes, person_count):
                     'quantity': int(ingrid['quantity']) * person_count}
     return data
 
+def writer(data, file_name='result'):
+    dir = os.getcwd()
+    file = dir + '/BasicFiles/' + f'{file_name}.txt'
+    with open(file, 'w', encoding='utf-8') as data_file:
+        for write_list in data:
+            data_file.write(str(write_list) + "\n")
+        return file
 
 def parser_txt(files):
     dir = os.getcwd()
     dir = dir + '/BasicFiles/'
     data = []
     for file in files:
-        file_data = {}
         lines = []
         with open(f'{dir}{file}.txt', 'r', encoding='utf-8') as data_file:
             counter = 0
             for line in data_file:
                 lines.append(line.strip())
                 counter += 1
-            data.append({'File name': f'{file}.txt', f'counter{file}': counter, 'data files': lines})
-    #test = OrderedDict(data)
+            data.append({'File name': f'{file}.txt', 'counter': counter, 'data files': lines})
+    sort_data = sorted(data, key=lambda k : k['counter'])
+    data = []
+    for lists in sort_data:
+        data.append(lists['File name'])
+        data.append(lists['counter'])
+        for data_f in lists['data files']:
+            data.append(data_f)
+    try:
+        print(writer(data))
+
+    except FileExistsError:
+        print(FileExistsError)
     return data
+
+
+
 
 
 pprint(load_file())
