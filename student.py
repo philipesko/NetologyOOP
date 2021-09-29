@@ -35,14 +35,20 @@ class Student:
             \nКурсы в процессе изучения: {", ".join(grades_name)}\nЗавершенные курсы: {", ".join(self.finished_courses)}'
         return response
 
+    def __lt__(self, other):
+        return self.avg_grades() > other.avg_grades()
+
+    def __eq__(self, other):
+        return self.avg_grades() == other.avg_grades()
+
     def compare(self, compare_student):
         name_winner = ""
         win_grade = "No body"
         if isinstance(compare_student, Student):
-            if self.avg_grades() > compare_student.avg_grades():
+            if self < compare_student:#self.avg_grades() > compare_student.avg_grades():
                 name_winner = self.name
                 win_grade = self.avg_grades()
-            elif self.avg_grades() == compare_student.avg_grades():
+            elif self == compare_student: #self.avg_grades() == compare_student.avg_grades():
                 name_winner = "No body"
             else:
                 name_winner = compare_student.name
@@ -81,14 +87,20 @@ class Lecturer(Mentor):
         response = f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции: {self.avg_grades()}'
         return response
 
+    def __lt__(self, other):
+        return self.avg_grades() > other.avg_grades()
+
+    def __eq__(self, other):
+        return self.avg_grades() == other.avg_grades()
+
     def compare(self, comp_lecturer):
         name_winner = ""
         win_grade = "No body"
         if isinstance(comp_lecturer, Lecturer):
-            if self.avg_grades() > comp_lecturer.avg_grades():
+            if self > comp_lecturer: #self.avg_grades() > comp_lecturer.avg_grades():
                 name_winner = self.name
                 win_grade = self.avg_grades()
-            elif self.avg_grades() == comp_lecturer.avg_grades():
+            elif self == comp_lecturer: #self.avg_grades() == comp_lecturer.avg_grades():
                 name_winner = "No body"
             else:
                 name_winner = comp_lecturer.name
