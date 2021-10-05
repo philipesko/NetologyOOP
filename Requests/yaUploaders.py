@@ -42,7 +42,7 @@ class YaUploader:
 if __name__ == '__main__':
     # Получить путь к загружаемому файлу и токен от пользователя
     #path_to_file = print(input('Please insert path to file for upload to Yandex Disk: '))
-    token = ''
+    token = TOKEN
     uploader = YaUploader(token)
     result = uploader.upload_file_to_disk('TestNetology', 'Requests\\Netology_test.txt')
     pprint(result)
