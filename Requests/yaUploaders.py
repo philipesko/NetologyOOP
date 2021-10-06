@@ -44,5 +44,5 @@ if __name__ == '__main__':
     #path_to_file = print(input('Please insert path to file for upload to Yandex Disk: '))
     token = ''
     uploader = YaUploader(token)
-    result = uploader.upload_file_to_disk('TestNetology', 'Requests\\Netology_test.txt')
+    result = uploader.upload_file_to_disk('TestNetology', 'Requests/Netology_test.txt')
     pprint(result)
