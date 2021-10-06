@@ -1,5 +1,4 @@
 import json
-import credentials
 
 from pprint import pprint
 import requests
