@@ -1,7 +1,6 @@
 import requests
 import os
 import time
-import vk
 from pprint import pprint
 from tqdm import tqdm
 
@@ -41,17 +40,21 @@ class Vkapi:
         get_photos = requests.get('https://api.vk.com/method/photos.get', params=playload).json()
         return get_photos
 
+    def compare_photos(self, photos_json):
+
+        pass
+
 if __name__ == "__main__":
+    pbar = tqdm(total=4, desc="VKAPI")
     vkapi = Vkapi('Test')
-    pbar = tqdm(total=3, desc="VKAPI")
     pbar.update(1)
     time.sleep(1)
     result = vkapi.result()
     print(result)
     pbar.update(1)
     time.sleep(1)
-    pprint(vkapi.get_photos(result, 1))
-    pbar.update(1)
+    vkapi.get_photos(result, 1)
+    pbar.update(2)
         
     
     
