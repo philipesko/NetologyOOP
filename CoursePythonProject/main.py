@@ -40,9 +40,7 @@ class Vkapi:
         get_photos = requests.get('https://api.vk.com/method/photos.get', params=playload).json()
         return get_photos
 
-    def compare_photos(self, photos_json):
-
-        pass
+    
 
 if __name__ == "__main__":
     pbar = tqdm(total=4, desc="VKAPI")
